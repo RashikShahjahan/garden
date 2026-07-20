@@ -25,7 +25,7 @@ body {
   margin: 0;
   background: var(--canvas);
   color: var(--ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -61,8 +61,10 @@ button:focus-visible, input:focus-visible {
 .sidebar-foot div:nth-child(2) { display: flex; flex-direction: column; min-width: 0; }
 .sidebar-foot strong { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sidebar-foot span { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.demo-mode-link { color: var(--green-2); font-size: 9px; font-weight: 650; margin-top: 5px; text-decoration: none; }
 .garden-avatar { align-items: center; background: #d2ded0; border-radius: 50%; color: var(--green); display: flex; font-size: 11px; font-weight: 750; height: 34px; justify-content: center; width: 34px; }
 .mobile-nav { display: none; }
+.mobile-demo-link { display: none; }
 
 .main-content { margin-left: 224px; min-height: 100vh; }
 .screen { margin: 0 auto; max-width: 1280px; padding: 42px 52px 72px; }
@@ -487,6 +489,7 @@ h1, h2, p { margin-top: 0; }
   .mobile-nav { align-items: center; background: rgba(255,255,255,.96); border-top: 1px solid var(--line); bottom: 0; display: grid; grid-template-columns: repeat(4, 1fr); left: 0; min-height: 66px; padding-bottom: env(safe-area-inset-bottom); position: fixed; right: 0; z-index: 50; }
   .mobile-nav button { align-items: center; background: transparent; border: 0; color: #7a837c; display: flex; flex-direction: column; font-size: 9px; gap: 3px; justify-content: center; }
   .mobile-nav button.is-active { color: var(--green); }
+  .mobile-demo-link { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; bottom: calc(100% + 8px); color: var(--green-2); display: block; font-size: 10px; font-weight: 650; padding: 6px 9px; position: absolute; right: 8px; text-decoration: none; }
   .page-header { align-items: flex-start; }
   .page-header h1 { font-size: 29px; }
   .weather-summary { border: 0; background: transparent; padding-right: 0; }

@@ -1,0 +1,35 @@
+"use client";
+
+import { ArrowRight, Camera, Check, ChevronRight, CloudRain, Flower2, ListChecks, MapPin, MoreHorizontal, Plus, Sparkles, Sprout, SunMedium } from "lucide-react";
+import { FormEvent, useState } from "react";
+
+export function AssistantComposer() {
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  function askVerdant(event: FormEvent) { event.preventDefault(); if (!question.trim()) return; setAnswer("I can help with that. I’ll consider your garden, recent activity, and today’s weather before answering."); setQuestion(""); }
+  return <section className="assistant-card" aria-labelledby="assistant-title">
+    <div className="eyebrow"><Sparkles size={15} /> Ask Verdant</div><div className="assistant-heading"><div><h2 id="assistant-title">What does your garden need?</h2><p>Ask a question, describe what you see, or add a photo.</p></div><span className="context-pill">Whole garden</span></div>
+    <form className="ask-box" onSubmit={askVerdant}><button className="icon-button" type="button" aria-label="Add a garden photo"><Camera size={20} /></button><input aria-label="Ask Verdant" onChange={(event) => setQuestion(event.target.value)} placeholder="Should I water the patio pots before the rain?" value={question} /><button className="send-button" type="submit" aria-label="Send question"><ArrowRight size={19} /></button></form>
+    <div className="prompt-row" aria-label="Suggested questions"><button onClick={() => setQuestion("What should I check in the garden today?")}>Today’s priorities</button><button onClick={() => setQuestion("Why are my tomato leaves curling?")}>Check a plant problem</button><button onClick={() => setQuestion("What can I do in ten minutes?")}>I have 10 minutes</button></div>{answer && <p className="assistant-reply" role="status"><Sparkles size={16} /> {answer}</p>}
+  </section>;
+}
+
+export function StarterTodayScreen({ onAddPlant, onAsk }: { onAddPlant: () => void; onAsk: () => void }) {
+  return <div className="screen today-screen starter-today">
+    <header className="page-header"><div><p className="date-line">Your first day</p><h1>Welcome to your garden</h1></div><button className="weather-summary"><SunMedium size={24} /><span><strong>21°</strong><small>Toronto, ON</small></span><ChevronRight size={17} /></button></header>
+    <section className="first-day-banner"><span className="summary-check"><Check size={27} /></span><div><span className="eyebrow">Setup complete</span><h2>Your first planting is ready.</h2><p>Verdant now knows enough to give simple, contextual guidance. Add the rest of your garden whenever you’re ready.</p></div></section>
+    <div className="starter-grid"><section className="starter-plant-card"><div className="card-head"><span className="eyebrow">Your first planting</span><span className="plant-status good">Doing well</span></div><div className="starter-plant-main"><span className="large-plant-symbol"><Flower2 size={34} /></span><div><span>Patio pots · Container</span><h2>Garden nasturtium</h2><p>Established · Mostly sunny</p></div></div><div className="first-task"><SunMedium size={19} /><div><strong>Check soil on the next warm morning</strong><p>Water only if it feels dry one finger deep.</p></div></div><button className="secondary-button full" onClick={onAsk}>Ask about this plant</button></section><section className="keep-building-card"><span className="eyebrow">Build your garden gradually</span><h2>Add one or two more plantings</h2><p>Once Verdant knows a few plants, it can suggest your first short Garden Walk.</p><button className="primary-button" onClick={onAddPlant}><Plus size={17} /> Add another planting</button><div className="setup-completion"><span><Check size={14} /> Location</span><span><Check size={14} /> First area</span><span><Check size={14} /> First plant</span></div></section><div className="starter-assistant"><AssistantComposer /></div></div>
+  </div>;
+}
+
+export function TodayScreen({ onStartWalk, onViewRoute }: { onStartWalk: () => void; onViewRoute: () => void }) {
+  const [taskDone, setTaskDone] = useState(false);
+  return <div className="screen today-screen">
+    <header className="page-header"><div><p className="date-line">Sunday, July 19</p><h1>Good morning, Maya</h1></div><button className="weather-summary" aria-label="Weather details for Toronto"><CloudRain size={24} /><span><strong>21°</strong><small>Rain at 4 PM</small></span><ChevronRight size={17} /></button></header>
+    <section className="briefing" aria-labelledby="briefing-title"><div className="briefing-icon"><SunMedium size={23} /></div><div><span className="eyebrow">Your garden today</span><h2 id="briefing-title">Check the patio before the afternoon rain.</h2><p>The containers may still need water after three warm days. Your raised bed can probably wait.</p><button className="text-button">How weather shaped this plan <ArrowRight size={16} /></button></div></section>
+    <div className="today-grid"><AssistantComposer /><section className={`next-action ${taskDone ? "is-complete" : ""}`} aria-labelledby="next-action-title"><div className="card-head"><span className="eyebrow">Best next action</span><span className="time-pill">4 min</span></div><div className="plant-symbol tomato"><Sprout size={25} /></div><div className="action-location"><MapPin size={14} /> Patio · Cherry tomato</div><h2 id="next-action-title">Check soil moisture</h2><p>Feel the soil one finger deep. Water only if it feels dry.</p><div className="action-buttons"><button className="primary-button" onClick={() => setTaskDone(!taskDone)}>{taskDone ? <><Check size={18} /> Completed</> : "Start check"}</button><button className="secondary-button">Ask why</button></div></section>
+      <section className="walk-card" aria-labelledby="walk-title"><div className="walk-copy"><span className="eyebrow"><ListChecks size={15} /> Suggested garden walk</span><h2 id="walk-title">A useful six-minute check</h2><p>Four plantings across three areas. The route starts with the containers before it gets warmer.</p><div className="route-preview" aria-label="Garden Walk route"><span><strong>01</strong> Patio</span><i /><span><strong>02</strong> Raised bed</span><i /><span><strong>03</strong> Back border</span></div></div><div className="walk-actions"><button className="primary-button" onClick={onStartWalk}>Start Garden Walk <ArrowRight size={18} /></button><button className="secondary-button" onClick={onViewRoute}>View route</button></div></section>
+      <section className="followups-card" aria-labelledby="followups-title"><div className="card-head"><div><span className="eyebrow">Keep an eye on</span><h2 id="followups-title">One follow-up</h2></div><button className="icon-button" aria-label="More follow-up options"><MoreHorizontal size={19} /></button></div><div className="followup-row"><span className="status-dot attention" /><div><strong>Kale leaf holes</strong><small>Raised bed · Check today</small></div><ChevronRight size={18} /></div></section>
+    </div>
+  </div>;
+}
